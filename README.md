@@ -1,15 +1,4 @@
-# 🚀 Welcome to your new awesome project!
+# RSS aggregator
 
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+# Link at WEB of project:
+`https://frontend-project-11-theta-nine.vercel.app/`
