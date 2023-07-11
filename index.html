@@ -32,16 +32,21 @@
 
     <div class="row">
 
+      <div class="col-md-10">
+        <button type="button" id="en" class="btn mb-3 btn-outline-primary lang">English</button>
+        <button type="button" id="ru" class="btn mb-3 btn-primary lang">Русский</button></div>
+      </div>
+
       <div class="col-md-10 col-lg-8 mx-auto">
-        <h1 class="display-3 mb-0">RSS агрегатор</h1>
-        <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+        <h1 class="display-3 mb-0 titles">RSS агрегатор</h1>
+        <p class="lead description_titles">Начните читать RSS сегодня! Это легко, это красиво.</p>
 
         <form action="" class="rss-form text-body">
           <div class="row">
             <div class="col">
               <div class="form-floating">
                 <input id="url-input" autofocus required name="url" aria-label="url" class="form-control w-100" placeholder="ссылка RSS" autocomplete="off">
-                <label for="url-input">Ссылка RSS</label>
+                <label for="url-input" class="rss-link">Ссылка RSS</label>
               </div>
             </div>
             <div class="col-auto">
@@ -49,7 +54,7 @@
             </div>
           </div>
         </form>
-        <p class="mt-2 mb-0 text-secondary">Пример: https://ru.hexlet.io/lessons.rss</p>
+        <p class="mt-2 mb-0 text-secondary example-link">Пример: https://ru.hexlet.io/lessons.rss</p>
         <p class="feedback m-0 position-absolute small text-danger"></p>
       </div>
 
