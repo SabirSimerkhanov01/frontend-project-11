@@ -18,8 +18,8 @@ export default {
       },
       error: {
         url: 'Ссылка должна быть валидным URL',
-        validationerror: 'RSS уже существует',
-        parsererror: 'Пожалуйста повторите запрос',
+        ValidationError: 'RSS уже существует',
+        Error: 'Пожалуйста повторите запрос',
       },
       noError: {
         correct: 'Ошибок нет',

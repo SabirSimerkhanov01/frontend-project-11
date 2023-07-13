@@ -38,19 +38,52 @@ const app = () => {
     const state = {
         inputForm: {
             links: [],
+            valid: '',
         },
         language: '',
         feeds: [],
         posts: [],
         error: '',
-        states: '',
+    };
+
+    const addSuccess = () => {
+        urlInput.classList.remove('is-invalid');
+        feedBack.classList.remove('text-danger');
+        feedBack.classList.add('text-success');
+        urlInput.classList.add('is-valid');
+    };
+
+    const addInvalid = () => {
+        urlInput.classList.remove('is-valid');
+        feedBack.classList.remove('text-success');
+        feedBack.classList.add('text-danger');
+        urlInput.classList.add('is-invalid');
     };
 
     const watchedState = onChange(state, (path, value, previousValue) => {
-        render(state);
-        if (path === 'error') {
-            feedBack.textContent = i18nexts.t(`error.${value.name.toLowerCase()}`);
+
+        if (path === 'feeds') {
+            render(state);
         }
+
+        if (path === 'error') {
+            addInvalid();
+            console.log(value);
+            if (value.message === 'this must be a valid URL') {
+                feedBack.textContent = i18nexts.t('error.url');
+            } else {
+                feedBack.textContent = i18nexts.t(`error.${value.name}`);
+            }
+        }
+
+        if (path === 'inputForm.valid') {
+            if (value === true) {
+                addSuccess();
+                urlInput.value = '';
+                feedBack.textContent = i18nexts.t('noError.success');
+            }
+        }
+
         if (path === 'language') {
             if (previousValue === '') {
                 previousValue = 'ru';
@@ -77,26 +110,29 @@ const app = () => {
             return parser(data, link);
         })
         .then((data) => {
+            watchedState.inputForm.valid = true;
             watchedState.inputForm.links.push(link);
             watchedState.feeds.push(data.feed);
             watchedState.posts.push(data.posts);
         })
         .catch((e) => {
+            watchedState.inputForm.valid = false;
             watchedState.error = e;
         });
     };
 
     rssForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        watchedState.inputForm.valid = '';
+        feedBack.textContent = '';
+
         const formData = new FormData(e.target);
         const link = formData.get('url');
-
         const userSchema = yup.string().notOneOf(state.inputForm.links).url();
         userSchema.validate(link)
+
         .then(() => {
             getData(link);
-            e.target.reset();
-            watchedState.error = '';
         })
         .catch((e) => {
             watchedState.error = e;

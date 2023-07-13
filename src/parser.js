@@ -1,12 +1,11 @@
 const parser = (data, url) => {
-    const state = {
-        feed: {
-            name: '',
-            link: '',
-            description: '',
-        },
-        posts: [],
-    }
+    const feeds = {
+        name: '',
+        link: '',
+        description: '',
+    };
+
+    const posts = [];
 
     const domParser = new DOMParser();
     const doc = domParser.parseFromString(data, 'text/xml');
@@ -15,20 +14,20 @@ const parser = (data, url) => {
 
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
-        throw new Error('parsererror');
+        throw new Error('parser');
     }
 
     if (titleOfFeed === null) {
-        throw new Error('parsererror');
+        throw new Error('parser');
     }
 
     if (titleOfFeed.textContent === 'Just a moment...') {
-        throw new Error('parsererror');
+        throw new Error('parser');
     }
 
-    state.feed.name = titleOfFeed.textContent;
-    state.feed.link = url;
-    state.feed.description = desOfFeed.textContent;
+    feeds.name = titleOfFeed.textContent;
+    feeds.link = url;
+    feeds.description = desOfFeed.textContent;
 
     const items = doc.querySelectorAll('item');
     items.forEach((el) => {
@@ -36,17 +35,16 @@ const parser = (data, url) => {
         const desOfPost = el.querySelector('description');
         const linkOfPost = el.querySelector('link');
 
-        state.posts.push({
-            name: titleOfPost.textContent,
+        posts.push({
+            title: titleOfPost.textContent,
             link: linkOfPost.textContent,
-            description: desOfPost.textContent,
-        })
+            post: desOfPost.textContent,
+        });
+
     })
 
-    const feed = state.feed;
-    const posts = state.posts;
     return {
-        feed: feed,
+        feed: feeds,
         posts: posts,
     };
 };
