@@ -9,8 +9,8 @@ const parser = (data, url) => {
     const doc = domParser.parseFromString(data, 'text/xml');
     const titleOfFeed = doc.querySelector('title');
     const desOfFeed = doc.querySelector('description');
-
     const errorNode = doc.querySelector('parsererror');
+
     if (errorNode) {
         throw new Error('rss');
     }

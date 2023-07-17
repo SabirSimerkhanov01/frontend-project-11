@@ -18,9 +18,8 @@ export default {
       },
       error: {
         url: 'This must be a valid URL',
-        rss: 'Resource not consist valid RSS',
         ValidationError: 'RSS already exists',
-        Error: 'Please repeat the request',
+        Error: 'Resource not consist valid RSS',
         TypeError: 'Please repeat the request',
       },
       noError: {
