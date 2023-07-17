@@ -12,15 +12,15 @@ const parser = (data, url) => {
 
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
-        throw new Error('parser');
+        throw new Error('rss');
     }
 
     if (titleOfFeed === null) {
-        throw new Error('parser');
+        throw new Error('rss');
     }
 
     if (titleOfFeed.textContent === 'Just a moment...') {
-        throw new Error('parser');
+        throw new Error('rss');
     }
 
     feeds.name = titleOfFeed.textContent;

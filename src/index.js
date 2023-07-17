@@ -66,7 +66,6 @@ const app = () => {
 
         if (path === 'error') {
             addInvalid();
-            console.log(value);
             if (value.message === 'this must be a valid URL') {
                 feedBack.textContent = i18nexts.t('error.url');
             } else {
@@ -139,6 +138,7 @@ const app = () => {
             getData(link);
         })
         .catch((e) => {
+            console.log(e);
             watchedState.error = e;
         });
     });
