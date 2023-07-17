@@ -34,11 +34,9 @@ const getDifference = (newState, oldState) => {
                 }
             }
         }
-
-        render(oldState);
-        makeEvent(oldState);
     }
 
+    return oldState;
 };
 
 const check = (state) => {
@@ -62,6 +60,10 @@ const check = (state) => {
         })
         .then(() => {
             return getDifference(newPosts, state.posts);
+        })
+        .then(() => {
+            render(state);
+            makeEvent(state);
         })
         .catch((e) => {
             console.log(e);

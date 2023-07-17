@@ -17,7 +17,7 @@ export default {
         nameOfPost: 'Посты',
       },
       error: {
-        url: 'Ссылка должна быть валидным URL',
+        url: 'Ресурс не содержит валидный RSS',
         ValidationError: 'RSS уже существует',
         Error: 'Пожалуйста повторите запрос',
         TypeError: 'Пожалуйста повторите запрос',

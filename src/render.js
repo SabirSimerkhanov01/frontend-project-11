@@ -22,8 +22,8 @@ const render = (state) => {
         );
     }
 
-    for (let i = posts.length - 1; i >= 0; i -= 1) {
-        allPosts.push(...posts[i]);
+    for (const post of posts) {
+        allPosts.push(...post);
     }
 
     for (let i = 0; i < allPosts.length - 1; i += 1) {
@@ -66,8 +66,10 @@ const render = (state) => {
     ${everyPost.join('\n')}
     `;
 
-    docFeeds.innerHTML = div.innerHTML;
-    docPosts.innerHTML = div2.innerHTML;
+    if (everyPost.length !== 0) {
+        docFeeds.innerHTML = div.innerHTML;
+        docPosts.innerHTML = div2.innerHTML;
+    }
 
     state.openLink.forEach((href) => {
         const postsHtml = document.querySelector('.posts');
