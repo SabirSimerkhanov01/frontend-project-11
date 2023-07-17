@@ -23,14 +23,9 @@ const parser = (data, url) => {
         throw new Error('parser');
     }
 
-    try {
-        feeds.name = titleOfFeed.textContent;
-        feeds.link = url;
-        feeds.description = desOfFeed.textContent;
-    } catch (error) {
-        throw new Error('parser');
-        
-    }
+    feeds.name = titleOfFeed.textContent;
+    feeds.link = url;
+    feeds.description = desOfFeed.textContent;
 
     const posts = [];
     const items = doc.querySelectorAll('item');
