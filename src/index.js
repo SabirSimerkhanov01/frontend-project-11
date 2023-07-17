@@ -119,6 +119,7 @@ const app = () => {
             watchedState.posts.push(posts);
         })
         .catch((e) => {
+            console.log(e);
             watchedState.inputForm.valid = false;
             watchedState.error = e;
         });

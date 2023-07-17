@@ -21,6 +21,7 @@ export default {
         ValidationError: 'RSS уже существует',
         Error: 'Ресурс не содержит валидный RSS',
         TypeError: 'Пожалуйста повторите запрос',
+        AxiosError: 'Ошибка сети',
       },
       noError: {
         correct: 'Ошибок нет',

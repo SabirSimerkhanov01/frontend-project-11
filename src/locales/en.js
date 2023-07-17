@@ -21,6 +21,7 @@ export default {
         ValidationError: 'RSS already exists',
         Error: 'Resource not consist valid RSS',
         TypeError: 'Please repeat the request',
+        AxiosError: 'Error of net',
       },
       noError: {
         correct: 'No errors',
