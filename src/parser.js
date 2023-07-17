@@ -5,8 +5,6 @@ const parser = (data, url) => {
         description: '',
     };
 
-    const posts = [];
-
     const domParser = new DOMParser();
     const doc = domParser.parseFromString(data, 'text/xml');
     const titleOfFeed = doc.querySelector('title');
@@ -25,10 +23,16 @@ const parser = (data, url) => {
         throw new Error('parser');
     }
 
-    feeds.name = titleOfFeed.textContent;
-    feeds.link = url;
-    feeds.description = desOfFeed.textContent;
+    try {
+        feeds.name = titleOfFeed.textContent;
+        feeds.link = url;
+        feeds.description = desOfFeed.textContent;
+    } catch (error) {
+        throw new Error('parser');
+        
+    }
 
+    const posts = [];
     const items = doc.querySelectorAll('item');
     items.forEach((el) => {
         const titleOfPost = el.querySelector('title');
@@ -38,15 +42,14 @@ const parser = (data, url) => {
         posts.push({
             title: titleOfPost.textContent,
             link: linkOfPost.textContent,
-            post: desOfPost.textContent,
+            description: desOfPost.textContent,
         });
-
     })
 
-    return {
-        feed: feeds,
-        posts: posts,
-    };
+    return [
+        feeds,
+        posts,
+    ];
 };
 
 export default parser;

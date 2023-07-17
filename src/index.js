@@ -7,16 +7,15 @@ import render from './render.js';
 import parser from './parser.js';
 import axios from 'axios';
 import resources from './locales/index.js';
+import event from './event.js';
+import check from './check';
 
 const app = () => {
     const rssForm = document.querySelector('.rss-form');
     const titles = document.querySelector('.titles');
-    const descriptionTitles = document.querySelector('.description_titles');
     const buttonAdd = document.querySelector('.btn-lg');
     const exampleLink = document.querySelector('.example-link');
     const rssLink = document.querySelector('.rss-link');
-    const feeds = document.querySelector('.feeds');
-    const posts = document.querySelector ('.posts');
     const feedBack = document.querySelector('.feedback');
     const urlInput = document.getElementById('url-input');
 
@@ -43,6 +42,7 @@ const app = () => {
         language: '',
         feeds: [],
         posts: [],
+        openLink: [],
         error: '',
     };
 
@@ -61,10 +61,8 @@ const app = () => {
     };
 
     const watchedState = onChange(state, (path, value, previousValue) => {
-
-        if (path === 'feeds') {
-            render(state);
-        }
+        render(state);
+        event(state);
 
         if (path === 'error') {
             addInvalid();
@@ -102,6 +100,11 @@ const app = () => {
         }
     });
 
+    setTimeout(function run() {
+        check(state);
+        setTimeout(run, 5000);
+    }, 5000);
+
     const getData = (link) => {
         const agent = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
         axios.get(agent)
@@ -112,8 +115,9 @@ const app = () => {
         .then((data) => {
             watchedState.inputForm.valid = true;
             watchedState.inputForm.links.push(link);
-            watchedState.feeds.push(data.feed);
-            watchedState.posts.push(data.posts);
+            const [feed, posts] = data;
+            watchedState.feeds.push(feed);
+            watchedState.posts.push(posts);
         })
         .catch((e) => {
             watchedState.inputForm.valid = false;
@@ -144,7 +148,6 @@ const app = () => {
             watchedState.language = e.target.id;
         });
     });
-
 };
 
 app();

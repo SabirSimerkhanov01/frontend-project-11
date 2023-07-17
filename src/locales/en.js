@@ -20,6 +20,7 @@ export default {
         url: 'This must be a valid URL',
         ValidationError: 'RSS already exists',
         Error: 'Please repeat the request',
+        TypeError: 'Please repeat the request',
       },
       noError: {
         correct: 'No errors',

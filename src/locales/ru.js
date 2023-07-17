@@ -20,6 +20,7 @@ export default {
         url: 'Ссылка должна быть валидным URL',
         ValidationError: 'RSS уже существует',
         Error: 'Пожалуйста повторите запрос',
+        TypeError: 'Пожалуйста повторите запрос',
       },
       noError: {
         correct: 'Ошибок нет',
