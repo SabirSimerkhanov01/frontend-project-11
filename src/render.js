@@ -15,19 +15,18 @@ const render = (state) => {
   const allPosts = [];
   const everyPost = [];
 
-  for (const feed of feeds) {
+  feeds.forEach((feed) => {
     allFeeds.push(
       `<h3 class="h6 m-0">${feed.name}</h3>`,
       `<p class="m-0 small text-black-50">${feed.description}</p>`,
     );
-  }
+  });
 
-  for (const post of posts) {
+  posts.forEach((post) => {
     allPosts.push(...post);
-  }
+  });
 
-  for (const el of allPosts) {
-
+  allPosts.forEach((el) => {
     everyPost.push(
       `
       <ul class="list-group border-0 rounded-0">
@@ -45,7 +44,7 @@ const render = (state) => {
       </ul>
     `,
     );
-  }
+  });
 
   if (allPosts.length !== 0) {
     docFeeds.innerHTML = `
