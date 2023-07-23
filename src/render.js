@@ -26,7 +26,7 @@ const render = (state) => {
         allPosts.push(...post);
     }
 
-    for (let i = 0; i < allPosts.length - 1; i += 1) {
+    for (let i = allPosts.length - 1; i >= 0 ; i -= 1) {
         let el = allPosts[i];
 
         everyPost.push(
@@ -48,27 +48,24 @@ const render = (state) => {
         );
     }
 
-    const div = document.createElement('div');
-    div.classList.add('card', 'border-0');
-    div.innerHTML = `
-    <div class="card-body">
-        <h2 class="card-title h4">${nameFeed}</h2>
-        ${allFeeds.join('\n')}
-    </div>
-    `;
-
-    const div2 = document.createElement('div');
-    div2.classList.add('card', 'border-0');
-    div2.innerHTML = `
-    <div class="card-body">
-        <h2 class="card-title h4">${namePost}</h2>
-    </div>
-    ${everyPost.join('\n')}
-    `;
-
-    if (everyPost.length !== 0) {
-        docFeeds.innerHTML = div.innerHTML;
-        docPosts.innerHTML = div2.innerHTML;
+    if (allPosts.length !== 0) {
+        docFeeds.innerHTML = `
+        <div class="card border-0">
+            <div class="card-body">
+                <h2 class="card-title h4">${nameFeed}</h2>
+                ${allFeeds.join('\n')}
+            </div>
+        </div>
+        `;
+    
+        docPosts.innerHTML = `
+            <div class="card border-0">
+                <div class="card-body">
+                    <h2 class="card-title h4">${namePost}</h2>
+                </div>
+            ${everyPost.join('\n')}
+            </div>
+        `;
     }
 
     state.openLink.forEach((href) => {

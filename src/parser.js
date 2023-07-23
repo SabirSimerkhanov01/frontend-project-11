@@ -41,10 +41,10 @@ const parser = (data, url) => {
         });
     })
 
-    return [
-        feeds,
-        posts,
-    ];
+    return {
+        feeds: feeds,
+        posts: posts,
+    };
 };
 
 export default parser;

@@ -1,48 +1,24 @@
 import axios from 'axios';
 import parser from './parser.js';
-import render from './render.js';
-import makeEvent from './event.js';
 
-const getDifference = (newState, oldState) => {
-    const difLinks = [];
-
-    for (let i = 0; i < newState.length; i += 1) {
-        const newLinks = [];
-        const oldLinks = [];
-
-        newState[i].forEach((el) => {
-            newLinks.push(el.link);
-        });
-
-        oldState[i].forEach((el) => {
-            oldLinks.push(el.link)
-        });
-
-        newLinks.map((newLink) => {
-            if (!oldLinks.includes(newLink)) {
-                difLinks.push(newLink);
-            }
-        });
+const getDifference = (oldObj, newObj) => {
+    const oldPosts = oldObj.posts;
+    const newPosts = newObj.posts;
+    for (let i = newPosts.length - 1; i >= 0; i -= 1) {
+        const newLinks = newPosts[i].map((el) => el.link);
+        const oldLinks = oldPosts[i].map((el) => el.link);
+        const filtered = newLinks.filter((el) => !oldLinks.includes(el));
+        const dataOfFilt = newPosts[i].filter((el) => filtered.includes(el.link))
+        oldPosts[i].push(...dataOfFilt);
     }
-
-    if (newState.length !== 0) {
-        for (let i = 0; i < newState.length; i += 1) {
-            for (const dLn of difLinks) {
-                for (const nst of newState[i])
-                if (nst.link === dLn) {
-                    oldState.push(nst);
-                }
-            }
-        }
-    }
-
-    return oldState;
 };
 
 const check = (state) => {
     const { feeds } = state;
-    const newPosts = [];
-
+    const newState = {
+        posts: [],
+        feeds: [],
+    };
     const promises = feeds.map((feed) => {
         const agent = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.link)}`;
         return axios.get(agent)
@@ -55,16 +31,13 @@ const check = (state) => {
     Promise.all(promises)
         .then((data) => {
             data.forEach((el) => {
-                newPosts.push(el[1]);
-            })
+                const { posts } = el;
+                const { feeds } = el;
+                newState.posts.push(posts);
+                newState.feeds.push(feeds);
+            });
         })
-        .then(() => {
-            return getDifference(newPosts, state.posts);
-        })
-        .then(() => {
-            render(state);
-            makeEvent(state);
-        })
+        .then(() => getDifference(state, newState))
         .catch((e) => {
             console.log(e);
         });

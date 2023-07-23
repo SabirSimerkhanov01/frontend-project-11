@@ -100,7 +100,11 @@ const app = () => {
     });
 
     setTimeout(function run() {
+
         check(state);
+        render(state);
+        event(state);
+
         setTimeout(run, 5000);
     }, 5000);
 
@@ -114,8 +118,8 @@ const app = () => {
         .then((data) => {
             watchedState.inputForm.valid = true;
             watchedState.inputForm.links.push(link);
-            const [feed, posts] = data;
-            watchedState.feeds.push(feed);
+            const { feeds, posts } = data;
+            watchedState.feeds.push(feeds);
             watchedState.posts.push(posts);
         })
         .catch((e) => {
