@@ -33,11 +33,11 @@ const parser = (data, url) => {
       link: linkOfPost.textContent,
       description: desOfPost.textContent,
     });
-  })
+  });
 
   return {
-    feeds: feeds,
-    posts: posts,
+    feeds,
+    posts,
   };
 };
 

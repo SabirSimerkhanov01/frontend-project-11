@@ -3,9 +3,9 @@ import 'bootstrap';
 import * as yup from 'yup';
 import onChange from 'on-change';
 import i18next from 'i18next';
+import axios from 'axios';
 import render from './render.js';
 import parser from './parser.js';
-import axios from 'axios';
 import resources from './locales/index.js';
 import event from './event.js';
 import check from './check';
@@ -39,11 +39,11 @@ const app = () => {
       links: [],
       valid: '',
     },
-      language: '',
-      feeds: [],
-      posts: [],
-      openLink: [],
-      error: '',
+    language: '',
+    feeds: [],
+    posts: [],
+    openLink: [],
+    error: '',
   };
 
   const addSuccess = () => {
@@ -96,34 +96,34 @@ const app = () => {
       buttonAdd.textContent = i18nexts.t('button.reset');
       exampleLink.textContent = i18nexts.t('form.example');
       rssLink.textContent = i18nexts.t('form.link');
-  }
-});
+    }
+  });
 
   setTimeout(function run() {
     check(state);
     render(state);
     event(state);
-        setTimeout(run, 5000);
-    }, 5000);
+    setTimeout(run, 5000);
+  }, 5000);
 
   const getData = (link) => {
     const agent = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
     axios.get(agent)
-    .then((response) => {
-      const data = response.data.contents;
-      return parser(data, link);
-    })
-    .then((data) => {
-      watchedState.inputForm.valid = true;
-      watchedState.inputForm.links.push(link);
-      const { feeds, posts } = data;
-      watchedState.feeds.push(feeds);
-      watchedState.posts.push(posts);
-    })
-    .catch((e) => {
-      watchedState.inputForm.valid = false;
-      watchedState.error = e;
-    });
+      .then((response) => {
+        const data = response.data.contents;
+        return parser(data, link);
+      })
+      .then((data) => {
+        watchedState.inputForm.valid = true;
+        watchedState.inputForm.links.push(link);
+        const { feeds, posts } = data;
+        watchedState.feeds.push(feeds);
+        watchedState.posts.push(posts);
+      })
+      .catch((e) => {
+        watchedState.inputForm.valid = false;
+        watchedState.error = e;
+      });
   };
 
   rssForm.addEventListener('submit', (e) => {
@@ -136,20 +136,19 @@ const app = () => {
     const userSchema = yup.string().notOneOf(state.inputForm.links).url();
     userSchema.validate(link)
 
-    .then(() => {
+      .then(() => {
         getData(link);
-    })
-    .catch((e) => {
-        console.log(e);
-        watchedState.error = e;
-    });
-});
+      })
+      .catch((err) => {
+        watchedState.error = err;
+      });
+  });
 
-    document.querySelectorAll('.lang').forEach((el) => {
-        el.addEventListener('click', (e) => {
-            watchedState.language = e.target.id;
-        });
+  document.querySelectorAll('.lang').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      watchedState.language = e.target.id;
     });
+  });
 };
 
 app();

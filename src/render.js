@@ -6,14 +6,14 @@ const render = (state) => {
     language,
     feeds,
     posts,
-} = state;
+  } = state;
 
   const nameFeed = language === 'en' ? 'Feeds' : 'Фиды';
   const namePost = language === 'en' ? 'Posts' : 'Посты';
 
-  let allFeeds = [];
-  let allPosts = [];
-  let everyPost = [];
+  const allFeeds = [];
+  const allPosts = [];
+  const everyPost = [];
 
   for (let i = feeds.length - 1; i >= 0; i -= 1) {
     allFeeds.push(
@@ -26,8 +26,8 @@ const render = (state) => {
     allPosts.push(...post);
   }
 
-  for (let i = allPosts.length - 1; i >= 0 ; i -= 1) {
-    let el = allPosts[i];
+  for (let i = allPosts.length - 1; i >= 0; i -= 1) {
+    const el = allPosts[i];
 
     everyPost.push(
       `
@@ -57,7 +57,6 @@ const render = (state) => {
             </div>
         </div>
     `;
-    
     docPosts.innerHTML = `
       <div class="card border-0">
         <div class="card-body">
