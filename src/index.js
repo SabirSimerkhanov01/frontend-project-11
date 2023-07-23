@@ -117,8 +117,8 @@ const app = () => {
         watchedState.inputForm.valid = true;
         watchedState.inputForm.links.push(link);
         const { feeds, posts } = data;
-        watchedState.feeds.push(feeds);
-        watchedState.posts.push(posts);
+        watchedState.feeds.unshift(feeds);
+        watchedState.posts.unshift(posts);
       })
       .catch((e) => {
         watchedState.inputForm.valid = false;

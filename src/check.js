@@ -21,7 +21,7 @@ const check = (state) => {
   const promises = feeds.map((feed) => {
     const agent = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.link)}`;
     return axios.get(agent)
-        .then((response) => {
+      .then((response) => {
         const data = response.data.contents;
         return parser(data, feed.link);
       })
